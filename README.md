@@ -1,4 +1,4 @@
-# which-claude
+# which-claude-code
 
 **Auto-generated session titles + per-session colors in the Claude Code statusline.**
 
@@ -21,8 +21,8 @@ Different sessions = visually distinct at a glance.
 ## Install
 
 ```
-/plugin marketplace add jbarbier/which-claude
-/plugin install which-claude@jbarbier
+/plugin marketplace add jbarbier/which-claude-code
+/plugin install which-claude-code@jbarbier
 ```
 
 Then start a new Claude Code session. The statusline shows `·  ·  ·` until
@@ -35,7 +35,7 @@ Two moving parts, both pure shell:
 1. **`UserPromptSubmit` hook** (`bin/update-session-title.sh`) — on every
    prompt you submit, forks a background process that reads the last few user
    turns from the transcript, asks Haiku for a concise title, and atomically
-   writes it to `~/.claude/which-claude/titles/<session_id>.txt`. The hook
+   writes it to `~/.claude/which-claude-code/titles/<session_id>.txt`. The hook
    itself returns in ~10ms so your prompt is never delayed.
 
 2. **Statusline** (`bin/statusline.sh`) — reads that file on every render,
@@ -43,8 +43,8 @@ Two moving parts, both pure shell:
    20-color palette, indexed by `cksum(session_id)`, so the mapping is stable
    for the life of the session.
 
-State lives under `~/.claude/which-claude/` (overridable via
-`$WHICH_CLAUDE_STATE_DIR`). Nothing else is touched.
+State lives under `~/.claude/which-claude-code/` (overridable via
+`$WHICH_CLAUDE_CODE_STATE_DIR`). Nothing else is touched.
 
 ## Cost
 
@@ -68,7 +68,7 @@ No separate API key or config is needed.
 
 ## Troubleshooting
 
-Everything lands in `~/.claude/which-claude/`:
+Everything lands in `~/.claude/which-claude-code/`:
 
 - `titles/<session_id>.txt` — one file per session, the current title
 - `hook.log` — every hook invocation, including Haiku stderr if it fails
@@ -76,7 +76,7 @@ Everything lands in `~/.claude/which-claude/`:
 If the statusline is stuck on `·  ·  ·`:
 
 ```
-tail -f ~/.claude/which-claude/hook.log
+tail -f ~/.claude/which-claude-code/hook.log
 ```
 
 and submit a prompt. You should see a `session_id -> <title>` line within a
@@ -92,8 +92,8 @@ and make sure the shown path is in your login shell's `PATH`.
 ## Uninstall
 
 ```
-/plugin uninstall which-claude
-rm -rf ~/.claude/which-claude
+/plugin uninstall which-claude-code
+rm -rf ~/.claude/which-claude-code
 ```
 
 ## License

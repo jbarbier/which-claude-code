@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# which-claude: UserPromptSubmit hook.
+# which-claude-code: UserPromptSubmit hook.
 # Generates a concise 3-6 word title for the current Claude Code session
 # via a backgrounded `claude -p --model haiku` call, and writes it to
-#   $HOME/.claude/which-claude/titles/<session_id>.txt
+#   $HOME/.claude/which-claude-code/titles/<session_id>.txt
 # The statusline script reads that file to display the current topic.
 #
 # The hook returns in ~10ms regardless of Haiku latency — the LLM call
@@ -17,7 +17,7 @@ transcript=$(printf '%s' "$input" | jq -r '.transcript_path // ""')
 [ -z "$session_id" ] && exit 0
 [ -z "$prompt" ]     && exit 0
 
-STATE_DIR="${WHICH_CLAUDE_STATE_DIR:-$HOME/.claude/which-claude}"
+STATE_DIR="${WHICH_CLAUDE_CODE_STATE_DIR:-$HOME/.claude/which-claude-code}"
 TITLES_DIR="$STATE_DIR/titles"
 LOG="$STATE_DIR/hook.log"
 mkdir -p "$TITLES_DIR"

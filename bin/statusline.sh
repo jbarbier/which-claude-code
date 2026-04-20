@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# which-claude: statusline.
+# which-claude-code: statusline.
 # Reads the per-session title written by the UserPromptSubmit hook and
 # prints it alongside a session-deterministic color, so parallel Claude
 # Code sessions are easy to tell apart.
@@ -33,7 +33,7 @@ else
 fi
 
 # Title from the hook-written file; placeholder until Haiku returns.
-STATE_DIR="${WHICH_CLAUDE_STATE_DIR:-$HOME/.claude/which-claude}"
+STATE_DIR="${WHICH_CLAUDE_CODE_STATE_DIR:-$HOME/.claude/which-claude-code}"
 title_file="$STATE_DIR/titles/$session_id.txt"
 if [ -f "$title_file" ]; then
   title=$(head -n 1 "$title_file")
