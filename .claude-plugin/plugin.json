@@ -1,7 +1,7 @@
 {
   "name": "which-claude-code",
   "description": "Auto-generated session titles + per-session colors in the statusline, so parallel Claude Code sessions are easy to tell apart at a glance.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "Julien Barbier",
     "url": "https://github.com/jbarbier"

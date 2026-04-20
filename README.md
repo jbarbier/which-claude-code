@@ -46,7 +46,13 @@ prompt refreshes the title.
 
 Claude Code plugins can contribute hooks, commands, agents, and skills —
 but not a `statusLine`. The `setup` command writes a `statusLine` block
-into `~/.claude/settings.json` pointing at the plugin's `statusline.sh`.
+into `~/.claude/settings.json` pointing at a small dispatcher at
+`~/.claude/which-claude-code/statusline.sh`. The dispatcher reads
+`installed_plugins.json` on every render and execs whichever plugin
+version is currently installed — so `/plugin update` doesn't leave
+`settings.json` pointing at a deleted cache path. You only need to re-run
+`setup` if this dispatcher itself gets an upgrade.
+
 If you already have a `statusLine` configured, it's backed up and
 restored automatically on uninstall.
 
