@@ -23,17 +23,25 @@ Different sessions = visually distinct at a glance.
 ```
 /plugin marketplace add jbarbier/which-claude-code
 /plugin install which-claude-code@jbarbier
+```
+
+**Quit and relaunch Claude Code** so the plugin's slash commands register.
+Then:
+
+```
 /which-claude-code:setup
 ```
 
-The third step is required because Claude Code plugins can't contribute a
-`statusLine` directly — only hooks, commands, and agents. The `setup`
-command writes a `statusLine` block into `~/.claude/settings.json` pointing
-at the plugin's `statusline.sh`. If you already have a `statusLine`
-configured, it's backed up and restored on uninstall.
+**Quit and relaunch once more** so the statusline picks up the config.
 
-Then start a new Claude Code session. The statusline shows `·  ·  ·` until
-your first prompt; after that every prompt refreshes the title.
+The `setup` step is required because Claude Code plugins can't contribute
+a `statusLine` directly — only hooks, commands, and agents. The command
+writes a `statusLine` block into `~/.claude/settings.json` pointing at the
+plugin's `statusline.sh`. If you already have a `statusLine` configured,
+it's backed up and restored on uninstall.
+
+The statusline shows `·  ·  ·` until your first prompt; after that every
+prompt refreshes the title.
 
 ## How it works
 
