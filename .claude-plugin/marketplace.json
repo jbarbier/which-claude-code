@@ -1,0 +1,30 @@
+{
+  "name": "jbarbier",
+  "owner": {
+    "name": "Julien Barbier",
+    "url": "https://github.com/jbarbier"
+  },
+  "metadata": {
+    "description": "Julien Barbier's Claude Code plugins."
+  },
+  "plugins": [
+    {
+      "name": "which-claude",
+      "source": "./",
+      "description": "Auto-generated session titles + per-session colors in the Claude Code statusline — tell parallel sessions apart at a glance.",
+      "version": "0.1.0",
+      "homepage": "https://github.com/jbarbier/which-claude",
+      "license": "MIT",
+      "author": {
+        "name": "Julien Barbier",
+        "url": "https://github.com/jbarbier"
+      },
+      "keywords": [
+        "statusline",
+        "hook",
+        "session",
+        "productivity"
+      ]
+    }
+  ]
+}

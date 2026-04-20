@@ -25,7 +25,8 @@ Different sessions = visually distinct at a glance.
 /plugin install which-claude@jbarbier
 ```
 
-Then start a new Claude Code session.
+Then start a new Claude Code session. The statusline shows `·  ·  ·` until
+your first prompt; after that every prompt refreshes the title.
 
 ## How it works
 
