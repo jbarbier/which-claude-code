@@ -20,28 +20,35 @@ Different sessions = visually distinct at a glance.
 
 ## Install
 
+Three steps, with a Claude Code restart after each of the first two.
+
+**1. Add the marketplace and install the plugin:**
+
 ```
 /plugin marketplace add jbarbier/which-claude-code
 /plugin install which-claude-code@jbarbier
 ```
 
-**Quit and relaunch Claude Code** so the plugin's slash commands register.
-Then:
+**2. Quit and relaunch Claude Code.** This lets the plugin's slash commands
+register. Then wire up the statusline:
 
 ```
 /which-claude-code:setup
 ```
 
-**Quit and relaunch once more** so the statusline picks up the config.
-
-The `setup` step is required because Claude Code plugins can't contribute
-a `statusLine` directly — only hooks, commands, and agents. The command
-writes a `statusLine` block into `~/.claude/settings.json` pointing at the
-plugin's `statusline.sh`. If you already have a `statusLine` configured,
-it's backed up and restored on uninstall.
+**3. Quit and relaunch Claude Code once more.** The statusline config
+is only read at startup, so a final restart is what makes it appear.
 
 The statusline shows `·  ·  ·` until your first prompt; after that every
 prompt refreshes the title.
+
+### Why the `setup` step?
+
+Claude Code plugins can contribute hooks, commands, agents, and skills —
+but not a `statusLine`. The `setup` command writes a `statusLine` block
+into `~/.claude/settings.json` pointing at the plugin's `statusline.sh`.
+If you already have a `statusLine` configured, it's backed up and
+restored automatically on uninstall.
 
 ## How it works
 
@@ -108,13 +115,14 @@ and make sure the shown path is in your login shell's `PATH`.
 
 ```
 /which-claude-code:uninstall
-/plugin uninstall which-claude-code
+/plugin uninstall which-claude-code@jbarbier
 rm -rf ~/.claude/which-claude-code
 ```
 
 The first line removes the `statusLine` block from `~/.claude/settings.json`
 (restoring any prior one). The second removes the hook and plugin. The third
-clears cached titles and the hook log.
+clears cached titles and the hook log. Restart Claude Code after to clear
+the statusline from any active sessions.
 
 ## License
 
