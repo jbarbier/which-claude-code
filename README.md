@@ -13,9 +13,9 @@ color uniquely hashed from the session ID. Same session = same color, forever.
 Different sessions = visually distinct at a glance.
 
 ```
-● Fix Autopublish Double-Publish Bug   Opus · opt/vanio-gtm
-● Refactor Dashboard Credits Panel     Opus · opt/vanio-gtm
-● Ship WhatsApp Alert Routing          Opus · opt/vanio-gtm
+●  Fix Autopublish Double-Publish Bug · Opus 4.7 · opt/vanio-gtm (main)
+●  Refactor Dashboard Credits Panel · Opus 4.7 · opt/vanio-gtm (dash-credits)
+●  Ship WhatsApp Alert Routing · Opus 4.7 · opt/vanio-gtm (wa-routing)
 ```
 
 ## Install
@@ -61,7 +61,7 @@ Two moving parts, both pure shell:
    itself returns in ~10ms so your prompt is never delayed.
 
 2. **Statusline** (`bin/statusline.sh`) — reads that file on every render,
-   printing `● <title>  <model> · <cwd>`. The dot + title are colored from a
+   printing `●  <title> · <model> · <cwd> (<branch>)`. The title is colored from a
    20-color palette, indexed by `cksum(session_id)`, so the mapping is stable
    for the life of the session.
 

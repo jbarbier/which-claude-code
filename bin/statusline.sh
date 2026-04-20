@@ -10,6 +10,14 @@ session_id=$(printf '%s' "$input" | jq -r '.session_id // ""')
 cwd=$(printf '%s'       "$input" | jq -r '.cwd // ""')
 model=$(printf '%s'     "$input" | jq -r '.model.display_name // .model.id // "Claude"')
 
+# Git branch (empty if not a repo or git unavailable).
+branch=""
+if [ -n "$cwd" ] && command -v git >/dev/null 2>&1; then
+  branch=$(git -C "$cwd" symbolic-ref --short HEAD 2>/dev/null \
+        || git -C "$cwd" rev-parse --short HEAD 2>/dev/null \
+        || true)
+fi
+
 # cwd: collapse $HOME -> ~, keep only the last two path segments.
 if [ -n "$cwd" ]; then
   cwd="${cwd/#$HOME/~}"
@@ -47,7 +55,13 @@ dim="${esc}[2m"
 fg="${esc}[38;5;${color}m"
 bold="${esc}[1m"
 
-printf '%s●%s %s%s%s%s  %s%s · %s%s' \
-  "$fg" "$reset" \
-  "$fg$bold" "$title" "$reset" "" \
-  "$dim" "$model" "$short_cwd" "$reset"
+if [ -n "$branch" ]; then
+  branch_seg=" (${branch})"
+else
+  branch_seg=""
+fi
+
+printf '●  %s%s%s%s %s·%s %s%s · %s%s%s' \
+  "$fg" "$bold" "$title" "$reset" \
+  "$dim" "$reset" \
+  "$dim" "$model" "$short_cwd" "$branch_seg" "$reset"
