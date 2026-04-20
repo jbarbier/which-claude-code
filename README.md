@@ -23,7 +23,14 @@ Different sessions = visually distinct at a glance.
 ```
 /plugin marketplace add jbarbier/which-claude-code
 /plugin install which-claude-code@jbarbier
+/which-claude-code:setup
 ```
+
+The third step is required because Claude Code plugins can't contribute a
+`statusLine` directly — only hooks, commands, and agents. The `setup`
+command writes a `statusLine` block into `~/.claude/settings.json` pointing
+at the plugin's `statusline.sh`. If you already have a `statusLine`
+configured, it's backed up and restored on uninstall.
 
 Then start a new Claude Code session. The statusline shows `·  ·  ·` until
 your first prompt; after that every prompt refreshes the title.
@@ -92,9 +99,14 @@ and make sure the shown path is in your login shell's `PATH`.
 ## Uninstall
 
 ```
+/which-claude-code:uninstall
 /plugin uninstall which-claude-code
 rm -rf ~/.claude/which-claude-code
 ```
+
+The first line removes the `statusLine` block from `~/.claude/settings.json`
+(restoring any prior one). The second removes the hook and plugin. The third
+clears cached titles and the hook log.
 
 ## License
 
