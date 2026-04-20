@@ -56,6 +56,25 @@ version is currently installed — so `/plugin update` doesn't leave
 If you already have a `statusLine` configured, it's backed up and
 restored automatically on uninstall.
 
+## Updating
+
+```
+/plugin marketplace update jbarbier
+/plugin update which-claude-code@jbarbier
+```
+
+Then restart Claude Code once for the new statusline to take effect.
+
+**A note on the UI**: after `/plugin update`, Claude Code drops you onto
+the **Discover** tab with a list of every available plugin. That's
+CC's default — there's no "updated X → Y" confirmation. Your success
+signal is the **Errors** tab showing no count (just "Errors", not
+"Errors (1)"). The update itself worked; the UI just isn't telling you.
+
+You don't need to re-run `/which-claude-code:setup` after an update —
+the dispatcher installed on first setup handles version routing
+automatically.
+
 ## How it works
 
 Two moving parts, both pure shell:
