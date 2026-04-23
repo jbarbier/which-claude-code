@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.0 — ctx / 5h / 7d usage segments in the statusline
+
+Appends three optional segments to the statusline whenever Claude Code
+populates the underlying fields:
+
+```
+… · ctx:12% · 5h:34% · 7d:8%
+```
+
+- `ctx:` — current context-window usage (`.context_window.used_percentage`)
+- `5h:`  — rolling five-hour rate-limit usage (`.rate_limits.five_hour.used_percentage`)
+- `7d:`  — rolling seven-day rate-limit usage (`.rate_limits.seven_day.used_percentage`)
+
+Each segment renders only if its source field is present, so older Claude
+Code builds (or any build that omits a field) see no change.
+
+Values below 0.5% render as `<1%` rather than `0%`. Claude Code pre-rounds
+`used_percentage` to an integer, so a freshly-reset 5-hour window with
+real-but-tiny usage would otherwise surface as `5h:0%` and look broken.
+
+No behavior change to the existing title / model / cwd / branch segments.
+
 ## 0.2.0 — recursive self-invocation fix (security / reliability)
 
 **If you are on 0.1.x, upgrade immediately.**

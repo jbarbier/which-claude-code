@@ -61,7 +61,45 @@ else
   branch_seg=""
 fi
 
-printf '●  %s%s%s%s %s·%s %s%s · %s%s%s' \
+# Usage segments: ctx / 5h / 7d — rendered only when Claude Code provides the
+# underlying fields. Claude Code pre-rounds used_percentage to an integer, so
+# anything under 0.5% arrives as literal 0; render that as "<1%" rather than
+# "0%" so a freshly-reset 5-hour window doesn't look like the data is broken.
+ctx_pct=$(printf '%s' "$input" | jq -r '.context_window.used_percentage // empty' 2>/dev/null)
+five_pct=$(printf '%s' "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty' 2>/dev/null)
+week_pct=$(printf '%s' "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty' 2>/dev/null)
+
+fmt_pct() {
+  local n
+  n=$(printf '%.0f' "$1" 2>/dev/null) || return 1
+  if [ "$n" = "0" ]; then
+    printf '<1%%'
+  else
+    printf '%s%%' "$n"
+  fi
+}
+
+usage_suffix=""
+if [ -n "$ctx_pct" ]; then
+  usage_suffix="${usage_suffix}${dim}ctx:${reset}$(fmt_pct "$ctx_pct")"
+fi
+if [ -n "$five_pct" ]; then
+  [ -n "$usage_suffix" ] && usage_suffix="${usage_suffix} ${dim}·${reset} "
+  usage_suffix="${usage_suffix}${dim}5h:${reset}$(fmt_pct "$five_pct")"
+fi
+if [ -n "$week_pct" ]; then
+  [ -n "$usage_suffix" ] && usage_suffix="${usage_suffix} ${dim}·${reset} "
+  usage_suffix="${usage_suffix}${dim}7d:${reset}$(fmt_pct "$week_pct")"
+fi
+
+if [ -n "$usage_suffix" ]; then
+  usage_seg=" ${dim}·${reset} ${usage_suffix}"
+else
+  usage_seg=""
+fi
+
+printf '●  %s%s%s%s %s·%s %s%s · %s%s%s%s' \
   "$fg" "$bold" "$title" "$reset" \
   "$dim" "$reset" \
-  "$dim" "$model" "$short_cwd" "$branch_seg" "$reset"
+  "$dim" "$model" "$short_cwd" "$branch_seg" "$reset" \
+  "$usage_seg"
