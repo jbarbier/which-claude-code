@@ -13,10 +13,17 @@ color uniquely hashed from the session ID. Same session = same color, forever.
 Different sessions = visually distinct at a glance.
 
 ```
-●  Fix Autopublish Double-Publish Bug · Opus 4.7 · opt/vanio-gtm (main)
-●  Refactor Dashboard Credits Panel · Opus 4.7 · opt/vanio-gtm (dash-credits)
-●  Ship WhatsApp Alert Routing · Opus 4.7 · opt/vanio-gtm (wa-routing)
+●  Fix Autopublish Double-Publish Bug · Opus 4.7 · opt/vanio-gtm (main) · ctx:12% · 5h:34% · 7d:8%
+●  Refactor Dashboard Credits Panel · Opus 4.7 · opt/vanio-gtm (dash-credits) · ctx:42% · 5h:34% · 7d:8%
+●  Ship WhatsApp Alert Routing · Opus 4.7 · opt/vanio-gtm (wa-routing) · ctx:7% · 5h:34% · 7d:8%
 ```
+
+The trailing `ctx:` / `5h:` / `7d:` segments show current context-window,
+five-hour, and seven-day usage. Each segment renders only when Claude Code
+provides the corresponding field, so older builds are unaffected. A
+freshly-reset window shows `<1%` instead of `0%` — Claude Code pre-rounds
+`used_percentage` to an integer, so any real usage below 0.5% arrives as 0
+and `<1%` is the honest render.
 
 ## Install
 
